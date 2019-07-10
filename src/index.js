@@ -1,3 +1,4 @@
+// 声明模块所需的依赖，webpack能够利用这些信息构建依赖图，然后使用图生成一个优化过的，会以正确顺序执行的bundle
 import _ from 'lodash'
 
 function component() {

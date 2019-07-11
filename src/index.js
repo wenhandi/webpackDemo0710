@@ -1,7 +1,8 @@
 // 声明模块所需的依赖，webpack能够利用这些信息构建依赖图，然后使用图生成一个优化过的，会以正确顺序执行的bundle
 import _ from 'lodash'
 import './style.css'
-import gongqj from './gongqijun.png'
+import Gongqj from './gongqijun.png'
+import Data from './data.xml'
 
 function component() {
     var element = document.createElement('div');
@@ -11,9 +12,11 @@ function component() {
     element.classList.add('hello');
 
     var admireImg = new Image()
-    admireImg.src = gongqj
+    admireImg.src = Gongqj
 
     element.appendChild(admireImg)
+
+    console.log(Data)
 
     return element;
   }

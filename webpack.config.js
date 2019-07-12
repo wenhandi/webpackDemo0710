@@ -1,23 +1,29 @@
 const path = require('path');
 const HtmlWbpackPlugin = require('html-webpack-plugin');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
+const webpack = require('webpack')
 
 module.exports = {
     entry: {
-        main: './src/index.js',
-        print: './src/print.js',
+        app: './src/index.js',
     },
     devtool: 'inline-source-map',
+    // webpackDevServer配置
     // 使用WebpackDevServer 在localhost:8080下建立服务，将dist目录下的文件，作为可访问文件
     // 内部是用了 webpack-dev-middle(是一个容器)
     devServer: {
-        contentBase: './dist'
+        contentBase: './dist',
+        // 使用webpack内置的HMR插件
+        hot: true
     },
     plugins: [
         new CleanWebpackPlugin(),
         new HtmlWbpackPlugin({
             title: '输出管理插件'
-        })
+        }),
+        // 查看要修补(patch)的依赖
+        new webpack.NamedModulesPlugin(),
+        new webpack.HotModuleReplacementPlugin(),
     ],
     output: {
         filename: '[name].bundle.js',

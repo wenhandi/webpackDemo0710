@@ -16,6 +16,14 @@ module.exports = {
         // 使用webpack内置的HMR插件
         hot: true
     },
+    module: {
+        rules: [
+            {
+                test: /\.css$/,
+                use: ['style-loader', 'css-laoder']
+            }
+        ]
+    },
     plugins: [
         new CleanWebpackPlugin(),
         new HtmlWbpackPlugin({

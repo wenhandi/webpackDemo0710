@@ -1,6 +1,7 @@
 // 声明模块所需的依赖，webpack能够利用这些信息构建依赖图，然后使用图生成一个优化过的，会以正确顺序执行的bundle
 import _ from 'lodash'
 import printMe from './print'
+import './styles.css'
 
 function component() {
     var element = document.createElement('div');
@@ -18,12 +19,16 @@ function component() {
 
     return element;
   }
-  
-  document.body.appendChild(component());
+  let element = component()
+  document.body.appendChild(element);
 
   if(module.hot){
     module.hot.accept('./print.js', function(){
       console.log("接收更新的printMe模块")
-      printMe()
+      // printMe()
+      document.body.removeChild(element);
+      element = component();
+      document.body.appendChild(element)
+
     })
   }

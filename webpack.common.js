@@ -7,13 +7,23 @@ module.exports = {
     },
     plugins: [
         new HtmlWbpackPlugin({
-            title: 'Code spliting'
+            title: 'caching'
         }),
     ],
     output: {
-        filename: '[name].bundle.js',
-        // 非入口chunk的名称
-        chunkFilename: '[name].bundle.js',
+        filename: '[name].[contenthash].js',
         path: path.resolve(__dirname, 'dist'),
     },
+    optimization: {
+        runtimeChunk: 'single',
+        splitChunks: {
+            cacheGroups: {
+                vendor: {
+                    test: /[\\/node_modules[\\/]]/,
+                    name: 'vendors2',
+                    chunks: 'all'
+                }
+            }
+        }
+    }
 }

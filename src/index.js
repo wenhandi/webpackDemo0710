@@ -1,13 +1,21 @@
-async function getComponent(){
-  var element = document.createElement("div");
+import _ from 'lodash'
 
-  const _ = await import(/* webpackChunkName: "loadsh" */ 'lodash')
+function component() {
+  var element = document.createElement('div')
+  var btn = document.createElement('button')
+  var br = document.createElement('br')
 
-  element.innerHTML = _.join(['Hello', 'webpack'], ' ')
+  btn.innerHTML = '点击按钮查看控制台'
+
+  element.appendChild(br)
+  element.appendChild(btn)
+
+  btn.onclick = () => import(/* webpackChunckName: "print"*/'./print').then(module => {
+    module.default()
+  })
 
   return element
+
 }
 
-getComponent().then(com => {
-  document.body.appendChild(com)
-})
+document.body.appendChild(component())

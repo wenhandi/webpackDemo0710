@@ -1,20 +1,19 @@
 const path = require('path');
 const HtmlWbpackPlugin = require('html-webpack-plugin');
-const {CleanWebpackPlugin} = require('clean-webpack-plugin');
-const webpack = require('webpack')
 
 module.exports = {
     entry: {
         app: './src/index.js',
     },
     plugins: [
-        new CleanWebpackPlugin(),
         new HtmlWbpackPlugin({
-            title: '输出管理插件'
+            title: 'Code spliting'
         }),
     ],
     output: {
         filename: '[name].bundle.js',
+        // 非入口chunk的名称
+        chunkFilename: '[name].bundle.js',
         path: path.resolve(__dirname, 'dist'),
     },
 }

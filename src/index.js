@@ -1,16 +1,13 @@
-import { cube } from './math.js'
+async function getComponent(){
+  var element = document.createElement("div");
 
-function component() {
-  var element = document.createElement('pre');
+  const _ = await import(/* webpackChunkName: "loadsh" */ 'lodash')
 
-  // Lodash（目前通过一个 script 脚本引入）对于执行这一行是必需的
-  element.innerHTML = [
-    'hello webpack',
-    '5的立方等于' + cube(5)
-  ].join('\n\n')
+  element.innerHTML = _.join(['Hello', 'webpack'], ' ')
 
-  return element;
+  return element
 }
-let element = component()
-document.body.appendChild(element);
 
+getComponent().then(com => {
+  document.body.appendChild(com)
+})

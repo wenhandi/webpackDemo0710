@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack')
 const HtmlWbpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
@@ -9,6 +10,7 @@ module.exports = {
         new HtmlWbpackPlugin({
             title: 'caching'
         }),
+        new webpack.HashedModuleIdsPlugin()
     ],
     output: {
         filename: '[name].[contenthash].js',

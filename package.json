@@ -10,7 +10,7 @@
     "start": "webpack-dev-server --open --config webpack.dev.js",
     "server": "node server.js",
     "build": "webpack --config webpack.prod.js",
-    "h": "webpack --config webpack.common.js"
+    "h": "webpack --config webpack.config.js"
   },
   "keywords": [],
   "author": "",

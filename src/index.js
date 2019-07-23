@@ -1,21 +1,16 @@
 import _ from 'lodash'
+import numRef from './ref.json'
 
-function component() {
-  var element = document.createElement('div')
-  var btn = document.createElement('button')
-  var br = document.createElement('br')
 
-  btn.innerHTML = '点击按钮查看控制台'
-
-  element.appendChild(br)
-  element.appendChild(btn)
-
-  btn.onclick = () => import(/* webpackChunckName: "print"*/'./print').then(module => {
-    module.default()
-  })
-
-  return element
-
+export function numberToWord(num){
+  return _.reduce(numRef, (accum, ref) => {
+    return ref.num === num ? ref.word: accum
+  }, '')
 }
 
-document.body.appendChild(component())
+export function wordToNum(word){
+  return _.reduce(numRef, (accum, ref) => {
+    return ref.word === word && word.toLowerCase() ? ref.num: accum
+  }, -1)
+}
+

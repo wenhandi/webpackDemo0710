@@ -1,33 +1,28 @@
 const path = require('path');
-const webpack = require('webpack')
+const HtmlWebpackPlugin = require('Html-webpack-plugin')
+const {CleanWebpackPlugin} = require('Clean-webpack-plugin')
+const WorkboxPlugin = require('Workbox-webpack-plugin')
 
 module.exports = {
     entry: {
-        polyfills: './src/polyfills.js',
-        index: './src/index.js'
+        index: './src/index.ts'
     },
-    output: {
-        filename: '[name].bundle.js',
-        path: path.resolve(__dirname, 'dist'),
-    },
+    // 告诉webpack提取source map 比行内镰刀最终的bundle中
+    devtool: 'inline-source-map',
     module: {
-        rules: [
-            // CJS上下文中 this指向是 module.exports,可通过import-loader覆盖this的指向
-            // {
-            //     test: require.resolve('./src/index.js'),
-            //     use: 'imports-loader?this=>window',
-            // },
-            // exports-loader讲一个全局变量作为一个普通的模块导出
+        rule: [
             {
-                test: require.resolve('./src/globals.js'),
-                use: 'exports-loader?file,parse=helpers.parse'
-            },
+                test: /\.tsx?$/,
+                use: 'ts-loader',
+                exclude: /node_modules/
+            }
         ]
     },
-    plugins: [
-        new webpack.ProvidePlugin({
-            // 可和tree shaking 配合将lodash library 中没用到的导出去除
-            join: ['lodash', 'join']
-        })
-    ]
+    resolve: {
+        extensions: ['.tsx', '.ts', '.js']
+    },
+    output: {
+        filename: 'bundle.js',
+        path: path.resolve(__dirname, 'dist'),
+    },
 }

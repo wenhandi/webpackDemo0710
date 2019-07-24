@@ -1,24 +1,33 @@
 const path = require('path');
 const webpack = require('webpack')
-const HtmlWbpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     entry: {
-        app: './src/index.js',
+        polyfills: './src/polyfills.js',
+        index: './src/index.js'
     },
     output: {
+        filename: '[name].bundle.js',
         path: path.resolve(__dirname, 'dist'),
-        filename: 'webpack-numbers.js',
-        // library在CJS AMD Node或全局变量
-        library: 'webpackNumbers',
-        libraryTarget: 'umd',
     },
-    externals: {
-        lodash: {
-            commonJs: 'lodash',
-            commonjs2: 'lodash',
-            amd: 'lodash',
-            root: '-'
-        }
-    }
+    module: {
+        rules: [
+            // CJS上下文中 this指向是 module.exports,可通过import-loader覆盖this的指向
+            // {
+            //     test: require.resolve('./src/index.js'),
+            //     use: 'imports-loader?this=>window',
+            // },
+            // exports-loader讲一个全局变量作为一个普通的模块导出
+            {
+                test: require.resolve('./src/globals.js'),
+                use: 'exports-loader?file,parse=helpers.parse'
+            },
+        ]
+    },
+    plugins: [
+        new webpack.ProvidePlugin({
+            // 可和tree shaking 配合将lodash library 中没用到的导出去除
+            join: ['lodash', 'join']
+        })
+    ]
 }

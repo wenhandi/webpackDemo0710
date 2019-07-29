@@ -9,7 +9,7 @@
     "start": "http-server dist",
     "server": "node server.js",
     "build": "webpack --config webpack.prod.js",
-    "h": "webpack --config webpack.config.js"
+    "h": "webpack --env.NODE_ENV=local --config webpack.config.js"
   },
   "keywords": [],
   "author": "",
